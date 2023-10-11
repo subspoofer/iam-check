@@ -77,18 +77,17 @@ def print_blocks(blocks):
 def yaml_convert(block):
   # Append data
   f = open("iap.yaml","a")
-  f.write('- exemptions:\n')
-  f.write('  permission:\n')
+  f.write('- exemption:\n')
 
   perms = [b for b in block if re.search(r'\b' + "permission" + r'\b', b)]
   for perm in perms:
     p = re.search('"[\w\s.]*"', perm)
-    f.write('  - ' + p.group(0) + '\n')
+    f.write('  - permission: ' + p.group(0) + '\n')
 
   accounts = [b for b in block if re.search(r'\b' + "account" + r'\b', b)]
   for account in accounts:
     a = re.search('"[\w\s.:-]*@[\w\s.:-]*"', account)
-    f.write('  account: ' + a.group(0) + '\n')
+    f.write('  - account: ' + a.group(0) + '\n')
 
   f.write('\n')
   f.close()
