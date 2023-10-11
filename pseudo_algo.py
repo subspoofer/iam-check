@@ -21,8 +21,8 @@ for block in exemption_blocks:
         exemption_dict[identifier] = block
 
 # Print each exemption block with a number
-for i, block in enumerate(exemption_blocks):
-    print(f"Exemption block {i+1}: {block}")
+#for i, block in enumerate(exemption_blocks):
+#   print(f"Exemption block {i+1}: {block}")
 
 # Define a regular expression pattern to extract the permission sets
 permission_pattern = r'permission: "(.+?)"'
