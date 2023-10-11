@@ -86,14 +86,12 @@ def yaml_convert(blocks):
     f.write('- exemption:\n')
 
     perms = [b for b in block if re.search(r'\b' + "permission" + r'\b', b)]
-    for perm in perms:
-      p = re.search('"[\w\s.]*"', perm)
-      f.write('  - permission: ' + p.group(0) + '\n')
+    for perm in perms: 
+      f.write('  -' + perm[1:] + '\n')
 
     accounts = [b for b in block if re.search(r'\b' + "account" + r'\b', b)]
-    for account in accounts:
-      a = re.search('"[\w\s.:-]*@[\w\s.:-]*"', account)
-      f.write('  - account: ' + a.group(0) + '\n')
+    for account in accounts: 
+      f.write('  -' + account[1:] + '\n')
 
     f.write('\n')
     f.close()
