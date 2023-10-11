@@ -74,11 +74,35 @@ def print_blocks(blocks):
 
     print("\n")
 
+def yaml_convert(block):
+  # Append data
+  f = open("iap.yaml","a")
+  f.write('- exemptions:\n')
+  f.write('  permission:\n')
+
+  perms = [b for b in block if re.search(r'\b' + "permission" + r'\b', b)]
+  for perm in perms:
+    p = re.search('"[\w\s.]*"', perm)
+    f.write('  - ' + p.group(0) + '\n')
+
+  accounts = [b for b in block if re.search(r'\b' + "account" + r'\b', b)]
+  for account in accounts:
+    a = re.search('"[\w\s.:-]*@[\w\s.:-]*"', account)
+    f.write('  account: ' + a.group(0) + '\n')
+
+  f.write('\n')
+  f.close()
+
+
+
 if __name__ == "__main__":
   content = read_lines("pylog")
 
   blocks = split_blocks(content)
   blocks = sort_blocks(blocks)
+
+  for block in blocks:
+    yaml_convert(block)
 
   accounts = extract_accounts(blocks)
   blocks = remove_duplicates(blocks)
