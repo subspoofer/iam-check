@@ -74,24 +74,27 @@ def print_blocks(blocks):
 
     print("\n")
 
-def yaml_convert(block):
-  # Append data
-  f = open("iap.yaml","a")
-  f.write('- exemptions:\n')
-  f.write('  permission:\n')
-
-  perms = [b for b in block if re.search(r'\b' + "permission" + r'\b', b)]
-  for perm in perms:
-    p = re.search('"[\w\s.]*"', perm)
-    f.write('  - ' + p.group(0) + '\n')
-
-  accounts = [b for b in block if re.search(r'\b' + "account" + r'\b', b)]
-  for account in accounts:
-    a = re.search('"[\w\s.:-]*@[\w\s.:-]*"', account)
-    f.write('  account: ' + a.group(0) + '\n')
-
-  f.write('\n')
+def yaml_convert(blocks):
+  # Clear file from previous run
+  f = open("iap.yaml", "w")
+  f.write('')
   f.close()
+
+  for block in blocks:
+    # Append data
+    f = open("iap.yaml","a")
+    f.write('- exemption:\n')
+
+    perms = [b for b in block if re.search(r'\b' + "permission" + r'\b', b)]
+    for perm in perms: 
+      f.write('  -' + perm[1:] + '\n')
+
+    accounts = [b for b in block if re.search(r'\b' + "account" + r'\b', b)]
+    for account in accounts: 
+      f.write('  -' + account[1:] + '\n')
+
+    f.write('\n')
+    f.close()
 
 
 
@@ -101,8 +104,7 @@ if __name__ == "__main__":
   blocks = split_blocks(content)
   blocks = sort_blocks(blocks)
 
-  for block in blocks:
-    yaml_convert(block)
+  yaml_convert(blocks)
 
   accounts = extract_accounts(blocks)
   blocks = remove_duplicates(blocks)
