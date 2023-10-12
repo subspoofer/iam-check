@@ -80,3 +80,41 @@ for unq in unique:
         else:
             print(u)
     print('\n')
+
+# Convert YAML
+def yaml_convert(blocks):
+  # Clear file from previous run
+  f = open("iap.yaml", "w")
+  f.write('')
+  f.close()
+
+  for block in blocks:
+    # Append data
+    f = open("iap.yaml","a")
+    f.write('- exemption:\n')
+
+    perms = [b for b in block if re.search(r'\b' + "permission" + r'\b', b)]
+    for perm in perms: 
+      f.write('  -' + perm[1:] + '\n')
+
+    accounts = [b for b in block if re.search(r'\b' + "account" + r'\b', b)]
+    for account in accounts: 
+      f.write('  -' + account[1:] + '\n')
+
+    f.write('\n')
+    f.close()
+
+
+
+if __name__ == "__main__":
+  content = read_lines("pylog")
+
+  blocks = split_blocks(content)
+  blocks = sort_blocks(blocks)
+
+  yaml_convert(blocks)
+
+  accounts = extract_accounts(blocks)
+  blocks = remove_duplicates(blocks)
+
+  print_blocks(blocks)
