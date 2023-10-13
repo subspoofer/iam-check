@@ -1,4 +1,4 @@
-import os
+import re
 
 # Define a function to read a file and split its contents into an array of lines
 def read_lines(file):
@@ -7,13 +7,26 @@ def read_lines(file):
 
 # Read the contents of the "pylog" file into an array of lines
 content = read_lines('./pylog')
-
-# Define variables to keep track of the start and end indices of each exemption block
-sIndex, eIndex = None, None
-
+"""
+Instead of reading the contents of the "pylog" file into an array of lines
+we can consider using protobuf here to convert IAP protofile to JSON (or YAML if possible)
+but this might then require to rewrite at least a step (or two) later
+"""
 # Define an array to store the start and end indices of each exemption block
 iterators = []
+# Define an array to store the contents of each exemption block
+blocks = []
+# Define an array to store the account information for each exemption block
+accounts = []
 
+# THIS IS THE ORIGINAL CODE NEXT PLZ MERGE sIndex and eIndex for loop into split_blocks function!!
+#def split_blocks(content):
+#  """Splits the content of a file into blocks, where each block is defined by a start and end marker."""
+#  blocks = []
+#  start_marker = re.compile(r"exemption: {")
+#  end_marker = re.compile(r"}")
+# Define variables to keep track of the start and end indices of each exemption block
+sIndex, eIndex = None, None
 # Loop through the lines of the file and find the start and end indices of each exemption block
 for index, c in enumerate(content):
     if 'exemption: {' in c:
@@ -21,9 +34,6 @@ for index, c in enumerate(content):
     if '}' in c:
         eIndex = index
         iterators.append({'sIndex': sIndex, 'eIndex': eIndex})
-
-# Define an array to store the contents of each exemption block
-blocks = []
 
 # Loop through the start and end indices of each exemption block and extract the contents of each block
 for it in iterators:
@@ -35,9 +45,6 @@ for it in iterators:
 
 # Sort the exemption blocks alphabetically
 blocks.sort()
-
-# Define an array to store the account information for each exemption block
-accounts = []
 
 # Loop through each exemption block and extract the account information
 for block in blocks:
@@ -66,20 +73,39 @@ for i in range(1, len(blocks)):
         unique.append(blocks[i-1])
 
 # Print the consolidated exemption blocks and account information to the console
-print("\n")
-print('\033[96m ------------------------------  IAM-AP CONSOLIDATION  ------------------------------- \033[0m')
+def print_blocks(blocks):
+  print("\n")
+  print('\x1b[96m ------------------------------  IAM-AP CONSOLIDATION  ------------------------------- \x1b[0m')
+# might have switched "blocks" here to "unique" at this point, need to check
+  for block in blocks:
+    for line in block:
+      if "exemption" in line:
+        print(f"\x1b[91m {line} \x1b[0m")
+      elif "account" in line:
+        print(f"\x1b[93m{line} \x1b[0m")
+      elif "}" in line:
+        print(f"\x1b[91m{line} \x1b[0m")
+      else:
+        print(line)
 
-for unq in unique:
-    for u in unq:
-        if 'exemption' in u:
-            print(f'\033[91m {u} \033[0m')
-        elif 'account' in u:
-            print(f'\033[93m{u} \033[0m')
-        elif '}' in u:
-            print(f'\033[91m{u} \033[0m')
-        else:
-            print(u)
-    print('\n')
+    print("\n")
+
+# OLD CODE (not sure what for, prolly just remove after confirming above works)
+  # print("\n")
+  # print('\033[96m ------------------------------  IAM-AP CONSOLIDATION  ------------------------------- \033[0m')
+  
+  # for unq in unique:
+  #     for u in unq:
+  #         if 'exemption' in u:
+  #             print(f'\033[91m {u} \033[0m')
+  #         elif 'account' in u:
+  #             print(f'\033[93m{u} \033[0m')
+  #         elif '}' in u:
+  #             print(f'\033[91m{u} \033[0m')
+  #         else:
+  #             print(u)
+  #     print('\n')
+# OLD CODE END
 
 # Convert YAML
 def yaml_convert(blocks):
@@ -103,8 +129,36 @@ def yaml_convert(blocks):
 
     f.write('\n')
     f.close()
+# THIS IS THE ORIGINAL CODE all these functions need 2b checked whether they are already rewritten above!!
+# def sort_blocks(blocks):
+#   """Sorts the blocks of a file by their content."""
+#   blocks.sort()
+#   return blocks
 
+# def extract_accounts(blocks):
+#   """Extracts the account numbers from the blocks of a file."""
+#   accounts = []
 
+#   for block in blocks:
+#     for line in block:
+#       if "account: " in line:
+#         account = line.split("account: ")[1]
+#         accounts.append(account)
+
+#   return accounts
+
+# def remove_duplicates(blocks):
+#   """Removes duplicate blocks from a list of blocks."""
+#   unique_blocks = []
+
+#   for i, block in enumerate(blocks):
+#     if i == 0:
+#       unique_blocks.append(block)
+#     else:
+#       if blocks[i-1] != block:
+#         unique_blocks.append(block)
+
+#   return unique_blocks
 
 if __name__ == "__main__":
   content = read_lines("pylog")
