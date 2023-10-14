@@ -75,8 +75,8 @@ for i, item in enumerate(blocks[0:-1]):
     else:
         # Catch the last block that was a duplicate in the first `if`; we still need an account from it
         # It's not perfect and needs to be polished (some flag and/or checks?)
-        if blocks[i] == blocks[i-1]:
-            unique[-1].insert(-3, accounts[i])
+        # if blocks[i] == blocks[i-1] and last_one == True:
+            # unique[-1].insert(-3, accounts[i])
 
         # Copy `blocks` table into `tmp` - copy is needed because if we insert account to a block, it will not match the next one from the list
         # Insert account from `accounts` table

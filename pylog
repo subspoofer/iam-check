@@ -151,3 +151,24 @@ exemption: {
 
   account: "group:cloudgtrieve-project-operator-role-9999@twosync.google.com"
 }
+
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.reset"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.restore"
+  permission: "compute.networks.updatePolicy"
+
+  account: "a@a.com"
+}
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.reset"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.restore"
+  permission: "compute.networks.updatePolicy"
+
+  account: "b@b.com"
+}
