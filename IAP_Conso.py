@@ -59,18 +59,27 @@ for block in blocks:
 unique = []
 
 # Loop through each exemption block and check if it is a duplicate
-for i in range(1, len(blocks)):
-    if blocks[i] == blocks[i-1]:
+for i in range(len(blocks)-1):
+    if blocks[i] == blocks[i+1]:
         # If the block is a duplicate, add the account information to the previous unique block
         if len(unique) <= 0:
-            blocks[i-1].insert(-2, accounts[i-1])
-            unique.append(blocks[i-1])
+            blocks[i].insert(-2, accounts[i])
+            unique.append(blocks[i])
         else:
-            unique[-1].insert(-3, accounts[i-1])
+            unique[-1].insert(-3, accounts[i])
     else:
+        # Catch the last block that was a duplicate in the first `if`; we still need an account from it
+        if blocks[i] == blocks[i-1]:
+            unique[-1].insert(-3, accounts[i])
+
         # If the block is not a duplicate, add it to the list of unique blocks
-        blocks[i-1].insert(-2, accounts[i-1])
-        unique.append(blocks[i-1])
+        blocks[i+1].insert(-2, accounts[i+1])
+        unique.append(blocks[i+1])
+
+        # Workaround for additional blocks that should be consolidated - DON'T USE!!!
+        # if blocks[i] == blocks[i-2]:
+            # unique[-1].insert(-3, accounts[i+2])
+
 
 # Print the consolidated exemption blocks and account information to the console
 def print_blocks(blocks):
@@ -163,12 +172,12 @@ def yaml_convert(blocks):
 if __name__ == "__main__":
   content = read_lines("pylog")
 
-  blocks = split_blocks(content)
-  blocks = sort_blocks(blocks)
+  # blocks = split_blocks(content)
+  # blocks = sort_blocks(blocks)
 
   yaml_convert(blocks)
 
-  accounts = extract_accounts(blocks)
-  blocks = remove_duplicates(blocks)
+  # accounts = extract_accounts(blocks)
+  # blocks = remove_duplicates(blocks)
 
-  print_blocks(blocks)
+  print_blocks(unique)
