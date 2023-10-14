@@ -76,3 +76,78 @@ exemption: {
 
   account: "group:cloudgtrieve-project-operator-role-efgh@twosync.google.com"
 }
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.create"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.update"
+  permission: "compute.networks.updatePolicy"
+  permission: "resourcemanager.create"
+  permission: "resourcemanager.delete"
+  permission: "resourcemanager.update"
+  permission: "compute.firewalls.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-ijkl@twosync.google.com"
+}
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.move"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.update"
+  permission: "compute.networks.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-1111@twosync.google.com"
+}
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.move"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.update"
+  permission: "compute.networks.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-2222@twosync.google.com"
+}
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.move"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.update"
+  permission: "compute.networks.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-3333@twosync.google.com"
+}
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.move"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.update"
+  permission: "compute.networks.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-4444@twosync.google.com"
+}
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.move"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.update"
+  permission: "compute.networks.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-5555@twosync.google.com"
+}
+
+
+# Permission to manage firewall rules.
+exemption: {
+  permission: "compute.firewalls.move"
+  permission: "compute.firewalls.delete"
+  permission: "compute.firewalls.restore"
+  permission: "compute.networks.updatePolicy"
+
+  account: "group:cloudgtrieve-project-operator-role-9999@twosync.google.com"
+}

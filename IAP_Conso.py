@@ -59,26 +59,32 @@ for block in blocks:
 unique = []
 
 # Loop through each exemption block and check if it is a duplicate
-for i in range(len(blocks)-1):
+for i, item in enumerate(blocks[0:-1]):
     if blocks[i] == blocks[i+1]:
         # If the block is a duplicate, add the account information to the previous unique block
         if len(unique) <= 0:
             blocks[i].insert(-2, accounts[i])
             unique.append(blocks[i])
         else:
-            unique[-1].insert(-3, accounts[i])
+            # It helps with most duplicate accounts in blocks
+            # Don't ask me why, I don't know
+            if len(unique) > 1: 
+                unique[-1].insert(-3, accounts[i+1])
+            else:
+                unique[-1].insert(-3, accounts[i])
     else:
         # Catch the last block that was a duplicate in the first `if`; we still need an account from it
+        # It's not perfect and needs to be polished (some flag and/or checks?)
         if blocks[i] == blocks[i-1]:
             unique[-1].insert(-3, accounts[i])
 
-        # If the block is not a duplicate, add it to the list of unique blocks
-        blocks[i+1].insert(-2, accounts[i+1])
-        unique.append(blocks[i+1])
+        # Copy `blocks` table into `tmp` - copy is needed because if we insert account to a block, it will not match the next one from the list
+        # Insert account from `accounts` table
+        # Add block to `unique`
+        tmp = blocks[i+1][:]
+        tmp.insert(-2, accounts[i+1])
+        unique.append(tmp)
 
-        # Workaround for additional blocks that should be consolidated - DON'T USE!!!
-        # if blocks[i] == blocks[i-2]:
-            # unique[-1].insert(-3, accounts[i+2])
 
 
 # Print the consolidated exemption blocks and account information to the console
@@ -180,4 +186,5 @@ if __name__ == "__main__":
   # accounts = extract_accounts(blocks)
   # blocks = remove_duplicates(blocks)
 
+#   remove_duplicate_accounts(unique)
   print_blocks(unique)
