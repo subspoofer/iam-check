@@ -59,14 +59,14 @@ for block in blocks:
 unique = []
 
 # Loop through each exemption block and check if it is a duplicate
-for i, item in enumerate(blocks[0:-1]):
+for i, block in enumerate(blocks[0:-1]):
     if blocks[i] == blocks[i+1]:
         # If the block is a duplicate, add the account information to the previous unique block
         if len(unique) <= 0:
             blocks[i].insert(-2, accounts[i])
             unique.append(blocks[i])
         else:
-            # It helps with most duplicate accounts in blocks
+            # It helps with most (all?) duplicate accounts in blocks
             # Don't ask me why, I don't know
             if len(unique) > 1: 
                 unique[-1].insert(-3, accounts[i+1])
