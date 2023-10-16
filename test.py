@@ -103,7 +103,7 @@ def check_duplicate(blocks):
           tmp = blocks[i+1][:]
           tmp.insert(-2, accounts_dict[i+1])
           unique.append(tmp)
-        return unique if unique is not None else []
+    return unique if unique is not None else []
     
 # Check for duplicates
 unique = check_duplicate(blocks)
