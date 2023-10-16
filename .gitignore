@@ -5,3 +5,5 @@ consolidated.txt
 converter.py
 pseudo_algo.py
 .gitignore
+blocks_no_accs
+accounts_list.txt
