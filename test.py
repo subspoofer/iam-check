@@ -50,7 +50,8 @@ iterators = index_blocks(content)
 # Extract the exemption blocks from the file using the iterators
 blocks = extract_blocks(content, iterators)
 
-blocks.sort()
+# How did this end up here, what is it for? I see no use of this method here
+#blocks.sort()
 
 # Print the resulting blocks
 print(blocks, '\n')
@@ -70,6 +71,7 @@ accounts_dict = extract_account(blocks)
 
 print(accounts, '\n')
 
+# This is to figure out for laterzzz
 # # Define a function to identify permission sets in each exemption block
 # def identify_permissions(blocks):
 #     for block in blocks:
@@ -82,7 +84,6 @@ print(accounts, '\n')
 
 # # Identify the permission sets in each block
 # permissions = identify_permissions(blocks)
-
 # print(permissions, '\n')
 
 # Define a function to compare each exemption block with the next one and identify unique groups of duplicated blocks based on permissions
@@ -111,7 +112,6 @@ unique = check_duplicate(blocks)
 def print_blocks(blocks):
   print("\n")
   print('\x1b[96m ------------------------------  IAM-AP CONSOLIDATION  ------------------------------- \x1b[0m')
-# might have switched "blocks" here to "unique" at this point, need to check
   for block in blocks:
     for line in block:
       if "exemption" in line:
