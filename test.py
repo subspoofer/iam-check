@@ -11,7 +11,7 @@ content = read_lines('./pylog')
 iterators = []
 # Define an array to store the contents of each exemption block
 blocks = []
-accounts = []
+#accounts = []
 # Define an array to store the account information for each exemption block
 accounts_dict = {}
 # Define an array to store the unique exemption blocks
@@ -40,8 +40,8 @@ def extract_blocks(content, iterators):
 
         blocks.append(segment)
         # Print test to see start and end of indices in each block
-        # print(f"Block {len(blocks)}: start index {it['sIndex']}, end index {it['eIndex']}")
-        # print(segment)
+        print(f"Block {len(blocks)}: start index {it['sIndex']}, end index {it['eIndex']}")
+        print(segment, '\n')
     return blocks
 
 # Now find the start and end indices of each exemption block in the file
@@ -54,7 +54,7 @@ blocks = extract_blocks(content, iterators)
 #blocks.sort()
 
 # Print the resulting blocks
-print(blocks, '\n')
+print('Blocks Extraction Test \n', blocks, '\n')
 
 # Define a function to extract accounts from each block
 def extract_account(blocks):
@@ -69,7 +69,7 @@ def extract_account(blocks):
 # Extract the account information from the blocks
 accounts_dict = extract_account(blocks)
 
-print(accounts, '\n')
+print('\n Extracted Accounts \n', accounts_dict)
 
 # This is to figure out for laterzzz
 # # Define a function to identify permission sets in each exemption block
@@ -90,7 +90,7 @@ print(accounts, '\n')
 def check_duplicate(blocks):
     for i, block in enumerate(blocks[0:-1]):
         if blocks[i] == blocks[i+1]:
-          print("Found duplicate block:", block)
+          print('\n Found duplicate block:', block)
           # If the block is a duplicate, add the account information to the previous unique block
           if len(unique) <= 0:
             block.insert(-2, accounts_dict[i])
