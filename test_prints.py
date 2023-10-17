@@ -50,9 +50,6 @@ iterators = index_blocks(content)
 # Extract the exemption blocks from the file using the iterators
 blocks = extract_blocks(content, iterators)
 
-# How did this end up here, what is it for? I see no use of this method here
-#blocks.sort()
-
 # Print the resulting blocks
 print('Blocks Extraction Test \n', blocks, '\n')
 
@@ -86,6 +83,7 @@ print('\n Extracted Accounts \n', accounts_dict)
 # permissions = identify_permissions(blocks)
 # print(permissions, '\n')
 
+# Sort modified blocks
 blocks.sort()
 
 def check_duplicate(blocks):
