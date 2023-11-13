@@ -1,18 +1,16 @@
 import re
 
-#############################################################################################################
-# Define a function to read a file and split its contents into an array of lines
+# Define a function that reads a file and split its contents into lines
 def read_lines(file):
     with open(file, 'r') as f:
         return f.read().splitlines()
-#############################################################################################################
 
 
-#############################################################################################################
+# Define a function to split and index (start/end) all the exemption blocks
 def split_blocks(content):
-  # Define an array to store the start and end indices of each exemption block
+  # List to store the start and end indices of each exemption block
   iterators = []
-  # Define an array to store the contents of each exemption block
+  # List to store the contents of each exemption block
   blocks = []
   
   # Define variables to keep track of the start and end indices of each exemption block
@@ -34,12 +32,11 @@ def split_blocks(content):
       blocks.append(segment)
 
   return blocks
-#############################################################################################################
 
 
-#############################################################################################################
+# Define function that extracts all the accounts from exemption blocks
 def extract_accounts(blocks):
-  # Define an array to store the account information for each exemption block
+  # Define a list to store the account information for each exemption block
   accounts = []
 
   # Loop through each exemption block and extract the account information
@@ -52,10 +49,8 @@ def extract_accounts(blocks):
               accounts.append(b)
   
   return accounts
-#############################################################################################################
 
-
-#############################################################################################################
+# Define function that checks for duplicate accounts
 def check_duplicate_accounts(blocks, accounts, unique, index):
   # Catch the last block that was a duplicate in the first `if`; we still need an account from it
   if blocks[index] == blocks[index-1]:
@@ -63,10 +58,8 @@ def check_duplicate_accounts(blocks, accounts, unique, index):
         return
       else:
         unique[-1].insert(-3, accounts[index])
-#############################################################################################################
 
-
-#############################################################################################################
+# Define function used to remove duplicate exemption blocks
 def remove_duplicates(blocks, accounts):
   # Define an array to store the unique exemption blocks
   unique = []
@@ -95,10 +88,8 @@ def remove_duplicates(blocks, accounts):
           unique.append(tmp)
 
   return unique
-#############################################################################################################
 
 
-#############################################################################################################
 # Print the consolidated exemption blocks and account information to the console
 def print_blocks(blocks):
   print("\n")
@@ -116,11 +107,8 @@ def print_blocks(blocks):
         print(line)
 
     print("\n")
-#############################################################################################################
 
-
-#############################################################################################################
-# Convert YAML
+# Convert to YAML
 def yaml_convert(blocks):
   # Clear file from previous run
   f = open("iap.yaml", "w")
@@ -142,9 +130,8 @@ def yaml_convert(blocks):
 
     f.write('\n')
     f.close()
-#############################################################################################################
 
-
+# Generate output
 if __name__ == "__main__":
   # Read the contents of the "pylog" file into an array of lines
   content = read_lines('./pylog')
