@@ -172,3 +172,5 @@ exemption: {
 
   account: "b@e.com"
 }
+
+# The groups are: abcde@a, abc@b, abcde@c, a@d, ab@e

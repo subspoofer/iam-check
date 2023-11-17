@@ -5,6 +5,9 @@ def read_lines(file):
     with open(file, 'r') as f:
         return f.read().splitlines()
 
+"""
+consider using protobuf here to convert IAP protofile to YAML if possible
+"""
 
 # Define a function to split and index (start/end) all the exemption blocks
 def split_blocks(content):
@@ -52,7 +55,7 @@ def extract_accounts(blocks):
 
 # Define function that checks for duplicate accounts
 def check_duplicate_accounts(blocks, accounts, unique, index):
-  # Catch the last block that was a duplicate in the first `if`; we still need an account from it
+  # Catch the last duplicate block in the first iteration if we still need to extract an account from it
   if blocks[index] == blocks[index-1]:
       if any(accounts[index] in a for a in unique[-1]):
         return
@@ -72,7 +75,7 @@ def remove_duplicates(blocks, accounts):
               blocks[i].insert(-2, accounts[i])
               unique.append(blocks[i])
           else:
-              # It helps with duplicate accounts in blocks
+              # this helps with duplicate accounts in blocks
               if len(unique) > 1: 
                   unique[-1].insert(-3, accounts[i+1])
               else:
@@ -80,12 +83,10 @@ def remove_duplicates(blocks, accounts):
       else:
           check_duplicate_accounts(blocks, accounts, unique, i)
 
-          # Copy `blocks` table into `tmp` - copy is needed because if we insert account to a block, it will not match the next one from the list
-          # Insert account from `accounts` table
-          # Add block to `unique`
+          # Copy `blocks` table into `tmp` - needed because if we insert account in a block, it will not match the next one from the list
           tmp = blocks[i+1][:]
-          tmp.insert(-2, accounts[i+1])
-          unique.append(tmp)
+          tmp.insert(-2, accounts[i+1]) # Insert account from `accounts` table
+          unique.append(tmp) # Add block to `unique`
 
   return unique
 
@@ -135,12 +136,6 @@ def yaml_convert(blocks):
 if __name__ == "__main__":
   # Read the contents of the "pylog" file into an array of lines
   content = read_lines('./pylog')
-  """
-  Instead of reading the contents of the "pylog" file into an array of lines
-  we can consider using protobuf here to convert IAP protofile to JSON (or YAML if possible)
-  but this might then require to rewrite at least a step (or two) later
-  """
-
   blocks = split_blocks(content)
   blocks.sort() # Sort the exemption blocks alphabetically
 

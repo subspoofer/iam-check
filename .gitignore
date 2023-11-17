@@ -1,11 +1,6 @@
-.vscode/settings.json
-iap.yaml
-ceelki_js2py.py
-consolidated.txt
-converter.py
-pseudo_algo.py
 .gitignore
-blocks_no_accs
-accounts_list.txt
-Extracted Accounts.coffee
-test2.py
+.vscode/settings.json
+ceelki.js
+iap.yaml
+test_prints.py
+test.py
