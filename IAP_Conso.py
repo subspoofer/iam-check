@@ -132,6 +132,30 @@ def yaml_convert(blocks):
     f.write('\n')
     f.close()
 
+# Define a function to sort the lines within each block
+def sort_lines_in_blocks(blocks):
+    for i in range(len(blocks)):
+        # Separate the opening and closing braces from the rest of the block
+        opening_brace = blocks[i].pop(0)
+        closing_brace = blocks[i].pop(-1)
+
+        # Separate permissions and accounts
+        permissions = [line for line in blocks[i] if line.strip().startswith('permission')]
+        accounts = [line for line in blocks[i] if line.strip().startswith('account')]
+
+        # Sort permissions and accounts
+        permissions.sort()
+        accounts.sort(key=lambda x: x.lower())  # sort accounts case-insensitively
+
+        # Combine sorted permissions and accounts
+        blocks[i] = permissions + accounts
+
+        # Add the opening and closing braces back to the block
+        blocks[i].insert(0, opening_brace)
+        blocks[i].append(closing_brace)
+
+    return blocks
+
 # Generate output
 if __name__ == "__main__":
   # Read the contents of the "pylog" file into an array of lines
@@ -143,6 +167,9 @@ if __name__ == "__main__":
 
   accounts = extract_accounts(blocks)
   blocks = remove_duplicates(blocks, accounts)
+
+  # Sort the lines within each block
+  blocks = sort_lines_in_blocks(blocks)
 
   # remove_duplicate_accounts(unique)
   print_blocks(blocks)
