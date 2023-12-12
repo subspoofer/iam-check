@@ -1,4 +1,4 @@
-Python script for neatly listing all roles, groups and accounts in GCP IAM (iam_policy.yaml) config files\
+Python script (IAM-check.py) for neatly listing all roles, groups and accounts in CLs for GCP IAM (iam_policy.yaml) config files\
 and to automatically consolidate repeated exemption blocks in auto-generated IAP (iam_allowed_policy.textproto) files.
 
 No prereqs, assuming you use Google's customized version of Perforce ;)\
