@@ -459,12 +459,21 @@ Examples:
             print_findings(results)
 
     elif args.test:
-        # Test mode - use local pylog file
+        # Test mode - use local pylog test file
         script_dir = Path(__file__).parent
-        pylog_path = script_dir / "pylog"
         
-        if not pylog_path.exists():
-            print(Color.red(f"Test file not found: {pylog_path}"))
+        # Try different possible test file names
+        test_files = ["pylog", "pylog_test.yml", "pylog.yml", "pylog.txt"]
+        pylog_path = None
+        
+        for test_file in test_files:
+            candidate = script_dir / test_file
+            if candidate.exists():
+                pylog_path = candidate
+                break
+        
+        if not pylog_path:
+            print(Color.red(f"Test file not found. Looked for: {', '.join(test_files)}"))
             sys.exit(1)
 
         print(Color.green(f"Running test with: {pylog_path}"))
