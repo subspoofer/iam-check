@@ -1,4 +1,9 @@
-Python script (IAM-check.py) for neatly listing all roles, groups and accounts in CLs for GCP IAM (iam_policy.yaml) config files\
-and to automatically consolidate repeated exemption blocks in auto-generated IAP (iam_allowed_policy.textproto) files.
+IAM Check Tool - Unified script for IAM policy analysis and consolidation.
 
-No prereqs, should be easy to modify if you need this to run with `p4` (Perforce).
+This tool scans IAM configuration files for roles, accounts, and wildcards,
+and consolidates duplicate exemption blocks in iam_allowed_policy.textproto files.
+
+Usage:
+    python iam_check.py --cl <CL_NUMBER>      # Scan files in a changelist
+    python iam_check.py --file <FILE_PATH>    # Analyze a specific file
+    python iam_check.py --test                # Run against local pylog test file
